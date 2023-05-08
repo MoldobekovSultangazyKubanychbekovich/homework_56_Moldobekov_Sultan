@@ -1,0 +1,35 @@
+﻿@model List<Order>
+@{
+    ViewBag.Title = "Заказы";
+}
+
+<h2>Заказы на товары</h2>
+<div class="table_section">
+    @if (@Model.Count == 0)
+    {
+        <p>Заказов нет</p>
+    }
+    else
+    {
+        <table style="width: 100%;">
+            <tr>
+                <th>Id</th>
+                <th>Имя покупателя</th>
+                <th>Адрес доставки</th>
+                <th>Контактный телефон</th>
+                 <th>ID телефона</th>
+            </tr>
+            @foreach (var o in @Model)
+            {
+               <tr>
+                    <td>@o.Id</td>
+                    <td>@o.Name</td>
+                    <td>@o.Address</td>
+                    <td>@o.ContactPhone</td>
+                    <td>@o.ProductId</td>
+                </tr>
+            }          
+        </table>
+    }
+</div>
+

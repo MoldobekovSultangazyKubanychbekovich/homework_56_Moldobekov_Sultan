@@ -1,0 +1,64 @@
+﻿@using home_55.ViewModels;
+@model ProductPagingViewModel
+@{
+    ViewBag.Title = "Товары";
+}
+
+<h2>Товары</h2>
+<div class="table_section">
+    @if (@Model.Products.Count() == 0)
+    {
+        <p>Товары еще не добавлены</p>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
+            @foreach (var p in @Model.Products)
+            {
+               <div class="card me-4 text-center" style="width: 30%;">
+                   <div class="w-100 h-auto">
+                       <img src="@p.Image" class="card-img-top w-100 h-auto" alt="@p.Name">
+                   </div>
+                  <div class="card-body">
+                      <h5 class="card-title">@p.Name</h5>
+                      <p class="card-text">Цена: @p.Price</p>
+                      <p class="card-text">Дата добавление: @p.DateCreate</p>
+                   </div>
+                   <div class="card-footer">
+                        <a asp-action="Details" asp-controller="Products" asp-route-productId="@p.Id"class="btn btn-primary">Детали</a>
+                        <a asp-action="Create" asp-controller="Orders" asp-route-productId="@p.Id"class="btn btn-primary">Заказать</a>
+                   </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+        class="btn btn-primary">
+         <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.TotalPages != 0)
+{
+    for (int i = 1; i <= Model.PageViewModel.TotalPages; i++)
+    {
+        <a asp-action="Index" asp-route-page="@i" class="btn btn-primary">
+           @i
+        </a>
+    }
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+        class="btn btn-primary">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+
+}

@@ -1,0 +1,14 @@
+.vs/
+
+
+# Build results
+
+[Dd]ebug/
+
+[Bb]in/
+
+[Oo]bj/
+/db/*.sqlite3
+*.db
+*.db-shm
+*.db-wal

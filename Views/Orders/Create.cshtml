@@ -1,0 +1,48 @@
+﻿@model Order
+
+@{
+    ViewBag.Title = "Заказать товар";
+}
+<h3 class="text-center mb-4">Заполните форму для заказа товара</h3>
+
+<div class="row ">
+
+    <div class="phone_create_form col-md-6 text-center w-50 m-auto">
+
+        <form asp-action="Create" asp-controller="Orders" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for=Name type ="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Имя покупателя</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for=Address type ="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Адрес доставки</label>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for=ContactPhone type="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Контактный телефон</label>
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input disabled type="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Выбраный товар @Model.Product.Name</label>
+                <input asp-for="ProductId" type="hidden" value="@Model.Product.Id">
+            </div>
+
+            <button class="btn btn-primary text-white" type="submit">Заказать</button>
+        </form>
+
+    </div>
+
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

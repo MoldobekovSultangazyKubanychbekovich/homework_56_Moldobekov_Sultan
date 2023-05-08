@@ -1,0 +1,30 @@
+﻿@model Brand
+@{
+    ViewBag.Title = "Добавить бренд";
+}
+<h3>Заполните форму для добавления бренда</h3>
+
+<div class="row">
+
+    <div class="brand_create_form col-md-6">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for=Name type ="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Название бренда</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-outline-success" type="submit">Добавить</button>
+        </form>
+
+    </div>
+
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

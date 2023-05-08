@@ -1,0 +1,40 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Детальная информация";
+}
+<div class="text-pic w-100 m-auto">
+    <div class="container-det">
+        <h3 class="border-bottom pb-3 mb-4 mt-5">Детальная информация о товаре</h3>
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
+            <div class="col">
+                <img src="@Model.Image" alt="#" class="w-100 h-auto mb-4">
+            </div>
+            <div class="col text-center">
+                <h5> @Model.Name</h5>
+                <p>Дата создание: @Model.DateCreate</p>
+                <p>Дата обновление: @Model.DateUpdate</p>
+                <p>Цена: @Model.Price</p>
+                @foreach(var b in ViewBag.Brands)
+                {
+                    if(@b.Id == @Model.BrandId)
+                    {
+                        <p>Бренд: @b.Name</p>
+                    }
+                }
+                @foreach(var c in ViewBag.Categories)
+                {
+                    if(@c.Id == @Model.CategoryId)
+                    {
+                        <p>Категория: @c.Name</p>
+                    }
+                }
+                 <div class="card-footer mt-5">
+                    <a class="btn btn-primary" asp-action="Update" asp-controller="Products" asp-route-productId="@Model.Id" >Редактировать </a> 
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="Products">Главная страница</a>
+                    <a class="btn btn-primary" asp-action="Delete" asp-controller="Products" asp-route-productId="@Model.Id" >Удалить</a>
+                 </div> 
+            </div>
+        </div>
+    </div>
+</div> 
+

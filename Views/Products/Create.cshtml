@@ -1,0 +1,58 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "Добавить товар";
+}
+<h3 class="text-center mb-4">Заполните форму для добавления товара</h3>
+
+<div class="row ">
+
+    <div class="product_create_form col-md-6 text-center w-50 m-auto">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for=Image type="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Картинка товара (url)</label>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for=Name type="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Название</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <p>Категория</p>
+                <select asp-for=CategoryId class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    @foreach (var c in ViewBag.Categories)
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-floating mb-3">
+                <p>Бренд</p>
+                <select asp-for=BrandId class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    @foreach (var b in ViewBag.Brands)
+                    {
+                        <option id="op" value="@b.Id">@b.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for=Price type="text" class="form-control" id="floatingInput">
+                <label for="floatingInput">Стоимость</label>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary text-white" type="submit">Добавить</button>
+        </form>
+
+    </div>
+
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
