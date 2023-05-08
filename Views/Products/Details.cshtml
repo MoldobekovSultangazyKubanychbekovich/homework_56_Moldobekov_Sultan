@@ -28,11 +28,14 @@
                         <p>Категория: @c.Name</p>
                     }
                 }
-                 <div class="card-footer mt-5">
-                    <a class="btn btn-primary" asp-action="Update" asp-controller="Products" asp-route-productId="@Model.Id" >Редактировать </a> 
+                 <div class="card-footer mt-5">  
                     <a class="btn btn-primary" asp-action="Index" asp-controller="Products">Главная страница</a>
-                    <a class="btn btn-primary" asp-action="Delete" asp-controller="Products" asp-route-productId="@Model.Id" >Удалить</a>
-                 </div> 
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a class="btn btn-primary" asp-action="Update" asp-controller="Products" asp-route-productId="@Model.Id">Редактировать </a>
+                        <a class="btn btn-primary" asp-action="Delete" asp-controller="Products" asp-route-productId="@Model.Id">Удалить</a>
+                    }
+                </div> 
             </div>
         </div>
     </div>

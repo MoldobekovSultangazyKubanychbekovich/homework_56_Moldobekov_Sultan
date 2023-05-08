@@ -25,8 +25,14 @@
                       <p class="card-text">Дата добавление: @p.DateCreate</p>
                    </div>
                    <div class="card-footer">
-                        <a asp-action="Details" asp-controller="Products" asp-route-productId="@p.Id"class="btn btn-primary">Детали</a>
-                        <a asp-action="Create" asp-controller="Orders" asp-route-productId="@p.Id"class="btn btn-primary">Заказать</a>
+                        @if (User.IsInRole("admin") || User.IsInRole("user"))
+                        {
+                            <a asp-action="Details" asp-controller="Products" asp-route-productId="@p.Id" class="btn btn-primary">Детали</a>
+                        }
+                        @if (User.IsInRole("user"))
+                        {
+                            <a asp-action="Create" asp-controller="Orders" asp-route-productId="@p.Id" class="btn btn-primary">Заказать</a>
+                        }
                    </div>
                 </div>
             }

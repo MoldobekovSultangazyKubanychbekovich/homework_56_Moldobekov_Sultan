@@ -6,7 +6,6 @@ using System.Numerics;
 
 namespace home_56.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class ProductsController : Controller
     {
         private StoreContext _db;
@@ -14,8 +13,9 @@ namespace home_56.Controllers
         {
             _db = db;
         }
+
         [AllowAnonymous]
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "user, admin")]
         public IActionResult Index(int page=1)
         {
             List<Product> products = _db.Products.ToList();
@@ -38,14 +38,14 @@ namespace home_56.Controllers
             ViewBag.Brands = _db.Brands.ToList();
             return View(product);
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             ViewBag.Categories = _db.Categories.ToList();
             ViewBag.Brands = _db.Brands.ToList();
             return View();
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Create(Product product)
         {
@@ -63,7 +63,7 @@ namespace home_56.Controllers
                 return RedirectToAction("Create");
             }
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Update(int productId)
         {
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId);
@@ -71,6 +71,7 @@ namespace home_56.Controllers
             ViewBag.Brands = _db.Brands.ToList();
             return View(product);
         }
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int productId)
         {
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId);
@@ -78,7 +79,7 @@ namespace home_56.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Update(Product product)
         {
