@@ -1,10 +1,13 @@
 ﻿using home_56.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace home_56.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategoriesController : Controller
     {
         private StoreContext _db;

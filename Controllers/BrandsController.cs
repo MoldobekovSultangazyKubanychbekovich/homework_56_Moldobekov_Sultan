@@ -1,8 +1,11 @@
 ﻿using home_56.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace home_56.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BrandsController : Controller
     {
         private StoreContext _db;

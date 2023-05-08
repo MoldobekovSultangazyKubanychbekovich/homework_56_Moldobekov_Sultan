@@ -1,5 +1,7 @@
 ﻿using home_56.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Numerics;
 
 namespace home_56.Controllers
@@ -11,19 +13,20 @@ namespace home_56.Controllers
         {
             _db = db;
         }
+        [Authorize(Roles = "admin, user")]
 
         public IActionResult Index()
         {
             List<Order> orders = _db.Orders.ToList();
             return View(orders);
         }
-
+        [Authorize(Roles = "user")]
         public IActionResult Create(int productId)
         {
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId);
             return View(new Order { Product = product });
         }
-
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult Create(Order order)
         {

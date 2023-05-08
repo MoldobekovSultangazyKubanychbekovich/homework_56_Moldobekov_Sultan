@@ -10,10 +10,10 @@ namespace home_56.Controllers
 {
     public class AccountController : Controller
     {
-        private StoreContext db;
-        public AccountController(StoreContext _db)
+        private StoreContext _context;
+        public AccountController(StoreContext context)
         {
-            db = _db;
+            _context = context;
         }
         [HttpGet]
         public IActionResult Login()
@@ -25,11 +25,11 @@ namespace home_56.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(user);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Products");
                 }
             }
             return View(model);
@@ -44,10 +44,10 @@ namespace home_56.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    var role = await db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                     var newuser = new User
                     {
                         Email = model.Email,
@@ -55,10 +55,10 @@ namespace home_56.Controllers
                         Role = role,
                         RoleId = role.Id
                     };
-                    await db.Users.AddAsync(newuser);
-                    await db.SaveChangesAsync();
+                    await _context.Users.AddAsync(newuser);
+                    await _context.SaveChangesAsync();
                     await Authenticate(newuser);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Products");
                 }
             }
             return View(model);

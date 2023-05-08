@@ -1,10 +1,12 @@
 ﻿using home_56.Models;
 using home_56.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 
 namespace home_56.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ProductsController : Controller
     {
         private StoreContext _db;
@@ -12,6 +14,8 @@ namespace home_56.Controllers
         {
             _db = db;
         }
+        [AllowAnonymous]
+        [Authorize(Roles = "user")]
         public IActionResult Index(int page=1)
         {
             List<Product> products = _db.Products.ToList();
@@ -26,7 +30,7 @@ namespace home_56.Controllers
             };
             return View(productPaging);
         }
-
+        [Authorize(Roles = "user, admin")]
         public IActionResult Details(int productId)
         {
             Product product = _db.Products.FirstOrDefault(p => p.Id == productId);

@@ -1,4 +1,5 @@
 using home_56.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace home_56
@@ -11,7 +12,12 @@ namespace home_56
 
             // Add services to the container.
             string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-            object value = builder.Services.AddDbContext<StoreContext>(options => options.UseNpgsql(connection));
+            builder.Services.AddDbContext<StoreContext>(options => options.UseNpgsql(connection));
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -28,7 +34,7 @@ namespace home_56
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
